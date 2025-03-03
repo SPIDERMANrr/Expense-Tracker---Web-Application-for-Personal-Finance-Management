@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #222;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #f00;
+  text-align: center;
+}
+
+form {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="date"], input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background-color: #333;
+  color: #fff;
+}
+
+input[type="submit"] {
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #444;
+}
+
+.warning {
+  color: #f00;
+  font-weight: bold;
+}
+</style>
+<body>
+    <h1>Expense Tracker</h1>
+
+    <form method="POST" action="/add_expense">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount"><br><br>
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category"><br><br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description"><br><br>
+        <label for="monthly_limit">Monthly Limit:</label>
+        <input type="number" id="monthly_limit" name="monthly_limit"><br><br>
+        <input type="submit" value="Add Expense">
+    </form>
+
+    <h2>Total Spent: {{ total_spent }}Rs</h2>
+    <h2>Most Used Category: {{ most_used_category }}</h2>
+
+    {% if total_spent > monthly_limit %}
+        <p class="warning">You've exceeded your monthly limit!</p>
+    {% endif %}
+
+    <h2>Expenses</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.date }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
